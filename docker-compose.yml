@@ -1,0 +1,8 @@
+services:
+  dashboard:
+    build: .
+    container_name: dash
+    restart: unless-stopped
+    pull_policy: build
+    env_file:
+      - stack.env

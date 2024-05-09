@@ -1,12 +1,15 @@
 import type { openMeteo } from '$lib/meteo/types.js';
 import os from 'os';
-import { latitude, longitude } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+import { error } from '@sveltejs/kit';
 
 export const load = async ({ fetch }) => {
+	if (!env.latitude || !env.longitude) throw error(500, 'ENV Error');
+
 	const data = {
 		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers'),
 		meteo: await json<openMeteo>(
-			`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code`
+			`https://api.open-meteo.com/v1/forecast?latitude=${env.latitude}&longitude=${env.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code`
 		),
 		system: [
 			{ name: 'CPU', value: (os.loadavg()[2] / os.cpus().length) * 100, unit: '%' },
