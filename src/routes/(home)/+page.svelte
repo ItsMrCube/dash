@@ -1,9 +1,21 @@
 <script lang="ts">
+	import { codes } from '$lib/meteo/wmo';
+
 	export let data;
 
 	const routers = data.traefik.filter(
 		(v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure'
 	);
+
+	function getMeteo(key: keyof typeof data.meteo.current) {
+		const value = data.meteo.current[key];
+		const unit = data.meteo.current_units[key];
+
+		return `${typeof value === 'number' ? value.toFixed(0) : value}${unit}`;
+	}
+
+	const meteoCode =
+		codes[data.meteo.current.weather_code.toString()][data.meteo.current.is_day ? 'day' : 'night'];
 
 	let form: HTMLFormElement;
 
@@ -14,13 +26,14 @@
 </script>
 
 <div class="grid gap-8">
-	<h3 class="text-center card">
-		{#await data.wttr}
-			...
-		{:then wttr}
-			{wttr}
-		{/await}
-	</h3>
+	<div class="text-center flex justify-center items-center card !py-0">
+		<img class="h-16" src={meteoCode.image} alt={meteoCode.description} />
+		<h3>
+			{meteoCode.description} · {getMeteo('apparent_temperature')} · 💧 {getMeteo(
+				'relative_humidity_2m'
+			)}
+		</h3>
+	</div>
 
 	<form
 		class="flex rounded-xl bg-slate-200 dark:bg-slate-900 overflow-clip h-12"
