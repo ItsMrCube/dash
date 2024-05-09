@@ -5,11 +5,23 @@ export const load = async ({ fetch }) => {
 	const data = {
 		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers'),
 		wttr: text(`https://wttr.in/${WTTR}?format=%c+%C+%f`),
-		system: {
-			cpu: (os.loadavg()[2] / os.cpus().length) * 100,
-			ram: (1 - os.freemem() / os.totalmem()) * 100
-		}
+		system: [
+			{ name: 'CPU', value: (os.loadavg()[2] / os.cpus().length) * 100, unit: '%' },
+			{ name: 'RAM', value: (1 - os.freemem() / os.totalmem()) * 100, unit: '%' },
+			{
+				name: 'Temp',
+				value: (await Bun.$`cat /sys/class/thermal/thermal_zone0/temp`.json()) / 1000,
+				unit: '°C'
+			},
+			{
+				name: 'Disk',
+				value: parseFloat((await Bun.$`df /`.text()).match(/(\d+)%/)[1]),
+				unit: '%'
+			}
+		]
 	};
+
+	console.log(data);
 
 	return data;
 

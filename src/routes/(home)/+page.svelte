@@ -14,7 +14,7 @@
 </script>
 
 <div class="grid gap-8">
-	<h3 class="text-center">
+	<h3 class="text-center card">
 		{#await data.wttr}
 			...
 		{:then wttr}
@@ -22,27 +22,8 @@
 		{/await}
 	</h3>
 
-	<div class="grid grid-cols-4 gap-4">
-		{#each routers as item}
-			<a href={`https://${item.rule.match(/\(`(.+)`\)/)[1]}`} target="_blank" class="card">
-				<h3>{item.service.split('-')[0]}</h3>
-			</a>
-		{/each}
-	</div>
-
-	<div class="grid grid-cols-2 gap-4">
-		{#each Object.keys(data.system) as k}
-			<div class="card grid gap-2">
-				<p class="opacity-50">{k.toUpperCase()}</p>
-				<h2>{data.system[k].toFixed(0)}%</h2>
-				<div></div>
-				<progress class="rounded-xl bg-slate-800" value={data.system[k]} max="100"></progress>
-			</div>
-		{/each}
-	</div>
-
 	<form
-		class="flex rounded-xl bg-slate-900 overflow-clip"
+		class="flex rounded-xl bg-slate-200 dark:bg-slate-900 overflow-clip h-12"
 		bind:this={form}
 		on:submit={(e) => search(e.target[0].value)}
 	>
@@ -51,7 +32,7 @@
 			placeholder="CubedSearch"
 			type="text"
 		/>
-		<button class="bg-blue-500 px-4">
+		<button class="bg-blue-500 dark:bg-blue-600 text-slate-50 px-4">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -68,10 +49,37 @@
 			</svg>
 		</button>
 	</form>
+
+	<div class="grid grid-cols-4 gap-4">
+		{#each routers as item}
+			<a href={`https://${item.rule.match(/\(`(.+)`\)/)[1]}`} target="_blank" class="card">
+				<h3>{item.service.split('-')[0]}</h3>
+			</a>
+		{/each}
+	</div>
+
+	<div class="grid grid-cols-2 gap-4">
+		{#each data.system as v}
+			<div class="card grid gap-2">
+				<div class="flex justify-between mb-1">
+					<span>{v.name}</span>
+					<span>
+						{v.value.toFixed(0)}{v.unit}
+					</span>
+				</div>
+				<div class="w-full bg-slate-300 rounded-full dark:bg-slate-800">
+					<div
+						class="bg-blue-500 dark:bg-blue-600 h-2.5 rounded-xl"
+						style="width: {v.value}%"
+					></div>
+				</div>
+			</div>
+		{/each}
+	</div>
 </div>
 
 <style lang="postcss">
 	.card {
-		@apply bg-slate-900 p-4 text-center rounded-xl;
+		@apply bg-slate-200 dark:bg-slate-900 p-4 text-center rounded-xl;
 	}
 </style>
