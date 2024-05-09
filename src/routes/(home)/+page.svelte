@@ -3,9 +3,20 @@
 
 	export let data;
 
-	const routers = data.traefik.filter(
-		(v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure'
-	);
+	const routers = data.traefik
+		.filter((v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure')
+		.map((v) => ({
+			...v,
+			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`
+		}))
+		.map((v) =>
+			v.service === 'pihole'
+				? {
+						...v,
+						link: v.link + '/admin'
+					}
+				: v
+		);
 
 	function getMeteo(key: keyof typeof data.meteo.current) {
 		const value = data.meteo.current[key];
@@ -65,7 +76,7 @@
 
 	<div class="grid grid-cols-4 gap-4">
 		{#each routers as item}
-			<a href={`https://${item.rule.match(/\(`(.+)`\)/)[1]}`} target="_blank" class="card">
+			<a href={item.link} target="_blank" class="card">
 				<h3>{item.service.split('-')[0]}</h3>
 			</a>
 		{/each}

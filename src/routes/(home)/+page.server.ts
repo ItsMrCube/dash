@@ -42,7 +42,7 @@ type Traefik = [
 	},
 	{
 		entryPoints: ['websecure'];
-		service: 'cdn';
+		service: 'cdn' | string;
 		rule: 'Host(`cdn.home.mrcube.dev`)';
 		priority: 27;
 		status: 'enabled';
