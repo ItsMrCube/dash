@@ -4,7 +4,9 @@
 	export let data;
 
 	const routers = data.traefik
-		.filter((v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure')
+		.filter(
+			(v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure' && v.service !== 'dash'
+		)
 		.map((v) => ({
 			...v,
 			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`
