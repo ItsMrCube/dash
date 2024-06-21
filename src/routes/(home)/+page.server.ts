@@ -13,7 +13,7 @@ export const load = async ({ fetch }) => {
 		system: [
 			{ name: 'CPU', value: (os.loadavg()[2] / os.cpus().length) * 100, unit: '%' },
 			{ name: 'RAM', value: (1 - os.freemem() / os.totalmem()) * 100, unit: '%' },
-			{
+			/* {
 				name: 'Temp',
 				value: (await Bun.$`cat /sys/class/thermal/thermal_zone0/temp`.json()) / 1000,
 				unit: '°C'
@@ -22,7 +22,7 @@ export const load = async ({ fetch }) => {
 				name: 'Disk',
 				value: parseFloat((await Bun.$`df /`.text()).match(/(\d+)%/)[1]),
 				unit: '%'
-			}
+			} */
 		]
 	};
 
