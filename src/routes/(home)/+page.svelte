@@ -76,35 +76,32 @@
 		</button>
 	</form>
 
-	<div class="grid grid-cols-4 gap-4">
+	<div class="box">
 		{#each routers as item}
 			<a href={item.link} target="_blank" class="card">
-				<h3>{item.service.split('-')[0]}</h3>
+				<h3>{item.rule.match(/`(\w+).+`/)[1]}</h3>
 			</a>
 		{/each}
 	</div>
 
-	<div class="grid grid-cols-2 gap-4">
-		{#each data.system as v}
-			<div class="card grid gap-2">
-				<div class="flex justify-between mb-1">
-					<span>{v.name}</span>
-					<span>
-						{v.value.toFixed(0)}{v.unit}
-					</span>
-				</div>
-				<div class="w-full bg-slate-300 rounded-full dark:bg-slate-800">
-					<div
-						class="bg-blue-500 dark:bg-blue-600 h-2.5 rounded-xl"
-						style="width: {v.value}%"
-					></div>
-				</div>
-			</div>
-		{/each}
+	<div class="box">
+		<a href="http://192.168.0.1" target="_blank" class="card">
+			<h3>iliadbox</h3>
+		</a>
+		<a href="https://pve.home.mrcube.dev:8006" target="_blank" class="card">
+			<h3>Proxmox</h3>
+		</a>
+		<a href="https://truenas.home.mrcube.dev" target="_blank" class="card">
+			<h3>TrueNAS</h3>
+		</a>
 	</div>
 </div>
 
 <style lang="postcss">
+	.box {
+		@apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+	}
+
 	.card {
 		@apply bg-slate-200 dark:bg-slate-900 p-4 text-center rounded-xl;
 	}
