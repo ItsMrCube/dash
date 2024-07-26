@@ -1,53 +1,78 @@
-import os from 'os';
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 import { json } from '$lib';
 import { getMeteo } from '$lib/meteo';
 
-export const load = async ({ fetch }) => {
-	if (!env.latitude || !env.longitude) throw error(500, 'ENV Error');
+export const load = async () => {
+	if (!env.latitude || !env.longitude || !env.pve) throw error(500, 'ENV Error');
 
 	const data = {
-		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers', fetch),
-		meteo: await getMeteo(fetch),
-		system: [
-			{ name: 'CPU', value: (os.loadavg()[2] / os.cpus().length) * 100, unit: '%' },
-			{ name: 'RAM', value: (1 - os.freemem() / os.totalmem()) * 100, unit: '%' },
-			/* {
-				name: 'Temp',
-				value: (await Bun.$`cat /sys/class/thermal/thermal_zone0/temp`.json()) / 1000,
-				unit: '°C'
-			},
-			{
-				name: 'Disk',
-				value: parseFloat((await Bun.$`df /`.text()).match(/(\d+)%/)[1]),
-				unit: '%'
-			} */
-		]
+		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers'),
+		meteo: await getMeteo(),
+		pve: {
+			status: (
+				await json<PVE>('https://pve.home.mrcube.dev:8006/api2/json/nodes', {
+					headers: {
+						Authorization: env.pve
+					}
+				})
+			).data[0],
+			zfs: (
+				await json<ZFS>(
+					'https://pve.home.mrcube.dev:8006/api2/json/nodes/pve/storage/local-zfs/status',
+					{
+						headers: {
+							Authorization: env.pve
+						}
+					}
+				)
+			).data
+		}
 	};
 
 	return data;
 };
 
-type Traefik = [
-	{
-		entryPoints: ['traefik'];
-		service: 'api@internal';
-		rule: 'PathPrefix(`/api`)';
-		priority: 0;
-		status: 'enabled';
-		using: ['traefik'];
-		name: 'api@internal';
-		provider: 'internal';
-	},
-	{
-		entryPoints: ['websecure'];
-		service: 'cdn' | string;
-		rule: 'Host(`cdn.home.mrcube.dev`)';
-		priority: 27;
-		status: 'enabled';
-		using: ['websecure'];
-		name: 'cdn@docker';
-		provider: 'docker';
-	}
-];
+type Traefik = {
+	entryPoints: string[];
+	service: string;
+	rule: string;
+	priority: number;
+	status: string;
+	using: string[];
+	name: string;
+	provider: string;
+}[];
+
+interface PVE {
+	data: [
+		{
+			status: string;
+			maxdisk: number;
+			id: string;
+			uptime: number;
+			ssl_fingerprint: string;
+			maxmem: number;
+			cpu: number;
+			level: string;
+			disk: number;
+			maxcpu: number;
+			mem: number;
+			node: string;
+			type: string;
+		}
+	];
+}
+
+interface ZFS {
+	data: {
+		active: number;
+		avail: number;
+		content: string;
+		enabled: number;
+		shared: number;
+		total: number;
+		type: string;
+		used: number;
+	};
+}

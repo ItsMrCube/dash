@@ -7,12 +7,11 @@ const cache = {
 	updated: new Date(0)
 };
 
-export async function getMeteo(fetchFn: typeof fetch) {
+export async function getMeteo() {
 	if (cache.updated > new Date(Date.now() - 15 * 60 * 1000)) return cache.data;
 
 	const data = await json<openMeteo>(
-		`https://api.open-meteo.com/v1/forecast?latitude=${env.latitude}&longitude=${env.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code`,
-		fetchFn
+		`https://api.open-meteo.com/v1/forecast?latitude=${env.latitude}&longitude=${env.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code`
 	);
 
 	cache.data = data;
