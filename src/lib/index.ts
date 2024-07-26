@@ -1,5 +1,5 @@
-export async function json<T>(url: string, fetchFn: typeof fetch): Promise<T> {
-	const data = await fetchFn(url);
+export async function json<T>(url: string, init?: FetchRequestInit): Promise<T> {
+	const data = await fetch(url, init);
 
 	return data.json();
 }
