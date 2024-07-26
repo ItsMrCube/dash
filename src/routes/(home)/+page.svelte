@@ -41,7 +41,7 @@
 		},
 		{
 			name: 'ZFS',
-			content: `${((data.pve.zfs.used / data.pve.zfs.total) * 100).toFixed(2)}%`,
+			content: `${(data.pve.zfs.used / 1024 ** 3).toFixed(2)} of ${(data.pve.zfs.total / 1024 ** 3).toFixed(0)} GB`,
 			value: (data.pve.zfs.used / data.pve.zfs.total) * 100
 		}
 	];
@@ -128,14 +128,14 @@
 
 	<div class="box">
 		{#each metrics as metric}
-			<div class="card grid gap-2">
-				<div class="flex justify-between mb-1">
+			<div class="card grid gap-2.5">
+				<div class="flex justify-between gap-16">
 					<span>{metric.name}</span>
-					<span>{metric.content}</span>
+					<span class="whitespace-nowrap">{metric.content}</span>
 				</div>
-				<div class="w-full bg-slate-300 rounded-full dark:bg-slate-800">
+				<div class="bg-slate-300 rounded-full dark:bg-slate-800">
 					<div
-						class="bg-blue-500 dark:bg-blue-600 h-2.5 rounded-xl"
+						class="bg-blue-500 dark:bg-blue-600 h-2.5 rounded-full"
 						style="width: {metric.value}%"
 					></div>
 				</div>
@@ -146,10 +146,10 @@
 
 <style lang="postcss">
 	.box {
-		@apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+		@apply flex flex-wrap gap-4;
 	}
 
 	.card {
-		@apply bg-slate-200 dark:bg-slate-900 p-4 text-center rounded-xl;
+		@apply bg-slate-200 dark:bg-slate-900 p-4 text-center rounded-xl basis-32 grow;
 	}
 </style>
