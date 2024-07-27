@@ -1,7 +1,37 @@
-export async function json<T>(url: string, init?: FetchRequestInit): Promise<T> {
-	const data = await fetch(url, init);
+const cache = new Map<
+	string,
+	{
+		data: unknown;
+		expires: Date;
+	}
+>();
 
-	return data.json();
+/**
+ * @param cacheFor - The duration in seconds for which the fetched data should be cached.
+ */
+export async function json<T>(url: string, init?: FetchRequestInit, cacheFor = 10) {
+	console.log(cache);
+
+	if (cache.has(url)) {
+		const cached = cache.get(url);
+
+		if (cached && cached.expires > new Date()) {
+			return cached.data as T;
+		}
+	}
+
+	const res = await fetch(url, init);
+
+	const data: T = await res.json();
+
+	if (cacheFor) {
+		cache.set(url, {
+			data: await data,
+			expires: new Date(Date.now() + cacheFor * 1000)
+		});
+	}
+
+	return data;
 }
 
 export function titleCase(str: string) {

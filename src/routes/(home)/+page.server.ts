@@ -1,14 +1,17 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 import { json } from '$lib';
-import { getMeteo } from '$lib/meteo';
 
 export const load = async () => {
 	if (!env.latitude || !env.longitude || !env.pve) throw error(500, 'ENV Error');
 
 	const data = {
 		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers'),
-		meteo: await getMeteo(),
+		meteo: await json<Meteo>(
+			`https://api.openweathermap.org/data/3.0/onecall?lon=${env.longitude}&lat=${env.latitude}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${env.appid}`,
+			undefined,
+			60
+		),
 		pve: {
 			status: (
 				await json<PVE>('https://pve.home.mrcube.dev:8006/api2/json/nodes', {
@@ -43,6 +46,36 @@ type Traefik = {
 	name: string;
 	provider: string;
 }[];
+
+interface Meteo {
+	lat: number;
+	lon: number;
+	timezone: string;
+	timezone_offset: number;
+	current: {
+		dt: number;
+		sunrise: number;
+		sunset: number;
+		temp: number;
+		feels_like: number;
+		pressure: number;
+		humidity: number;
+		dew_point: number;
+		uvi: number;
+		clouds: number;
+		visibility: number;
+		wind_speed: number;
+		wind_deg: number;
+		weather: [
+			{
+				id: number;
+				main: string;
+				description: string;
+				icon: string;
+			}
+		];
+	};
+}
 
 interface PVE {
 	data: [

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { codes } from '$lib/meteo/wmo';
 	import { env } from '$env/dynamic/public';
 
 	export let data;
@@ -46,16 +45,6 @@
 		}
 	];
 
-	function getMeteo(key: keyof typeof data.meteo.current) {
-		const value = data.meteo.current[key];
-		const unit = data.meteo.current_units[key];
-
-		return `${typeof value === 'number' ? value.toFixed(0) : value}${unit}`;
-	}
-
-	const meteoCode =
-		codes[data.meteo.current.weather_code.toString()][data.meteo.current.is_day ? 'day' : 'night'];
-
 	let form: HTMLFormElement;
 
 	function search(query: string) {
@@ -65,13 +54,28 @@
 </script>
 
 <div class="grid gap-8">
-	<div class="text-center flex justify-center items-center card !py-0">
-		<img class="h-16" src={meteoCode.image} alt={meteoCode.description} />
-		<h3>
-			{meteoCode.description} · {getMeteo('apparent_temperature')} · 💧 {getMeteo(
-				'relative_humidity_2m'
-			)}
-		</h3>
+	<div class="card flex items-center justify-center">
+		<!-- fixme or something -->
+		<!-- <img
+			src="https://openweathermap.org/img/wn/{data.meteo.current.weather[0].icon}.png"
+			alt={data.meteo.current.weather[0].description}
+			width="50"
+			height="50"
+		/> -->
+		<div>
+			<p>
+				The current temperature is {data.meteo.current.temp.toFixed(0)}°C, it feels like {data.meteo.current.feels_like.toFixed(
+					0
+				)}°C with {data.meteo.current.weather[0].description}.
+			</p>
+			<p>
+				Humidity is at {data.meteo.current.humidity}%, UV index is {data.meteo.current.uvi.toFixed(
+					0
+				)}, and cloudiness is {data.meteo.current.clouds}%. The wind is blowing at {data.meteo.current.wind_speed.toFixed(
+					0
+				)} m/s.
+			</p>
+		</div>
 	</div>
 
 	<form
@@ -84,7 +88,7 @@
 			placeholder="CubedSearch"
 			type="text"
 		/>
-		<button class="bg-blue-500 dark:bg-blue-600 text-slate-50 px-4">
+		<button class="bg-blue-500 dark:bg-blue-600 text-slate-50 px-4" aria-label="Search">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
