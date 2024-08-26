@@ -9,16 +9,10 @@
 		)
 		.map((v) => ({
 			...v,
-			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`
+			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`,
+			prettyName: v.rule.match(/`(\w+).+`/)[1]
 		}))
-		.map((v) =>
-			v.service === 'pihole'
-				? {
-						...v,
-						link: v.link + '/admin'
-					}
-				: v
-		);
+		.sort((a, b) => a.prettyName.localeCompare(b.prettyName));
 
 	const metrics: {
 		name: string;
@@ -109,7 +103,7 @@
 	<div class="box">
 		{#each routers as item}
 			<a href={item.link} target="_blank" class="card">
-				<h3>{item.rule.match(/`(\w+).+`/)[1]}</h3>
+				<h3>{item.prettyName}</h3>
 			</a>
 		{/each}
 	</div>
