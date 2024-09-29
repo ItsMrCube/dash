@@ -7,5 +7,5 @@ services:
     env_file:
       - stack.env
     labels:
-      - 'traefik.http.routers.dash.rule=Host(`home.mrcube.dev`)'
+      - 'traefik.http.routers.dash.rule=Host(`gaia.mrcube.dev`)'
       - 'traefik.http.services.dash.loadbalancer.server.port=3000'

@@ -6,7 +6,7 @@ export const load = async () => {
 	if (!env.latitude || !env.longitude || !env.pve) throw error(500, 'ENV Error');
 
 	const data = {
-		traefik: await json<Traefik>('https://traefik.home.mrcube.dev/api/http/routers'),
+		traefik: await json<Traefik>('https://traefik.gaia.mrcube.dev/api/http/routers'),
 		meteo: await json<Meteo>(
 			`https://api.openweathermap.org/data/3.0/onecall?lon=${env.longitude}&lat=${env.latitude}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${env.appid}`,
 			undefined,
@@ -14,7 +14,7 @@ export const load = async () => {
 		),
 		pve: {
 			status: (
-				await json<PVE>('https://pve.home.mrcube.dev:8006/api2/json/nodes', {
+				await json<PVE>('https://nexus.mrcube.dev:8006/api2/json/nodes', {
 					headers: {
 						Authorization: env.pve
 					}
@@ -22,7 +22,7 @@ export const load = async () => {
 			).data[0],
 			zfs: (
 				await json<ZFS>(
-					'https://pve.home.mrcube.dev:8006/api2/json/nodes/pve/storage/local-zfs/status',
+					'https://nexus.mrcube.dev:8006/api2/json/nodes/nexus/storage/local-zfs/status',
 					{
 						headers: {
 							Authorization: env.pve

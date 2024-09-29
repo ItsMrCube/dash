@@ -43,7 +43,7 @@
 
 	function search(query: string) {
 		form.reset();
-		window.location.href = `https://searx.home.mrcube.dev/search?q=${query}`;
+		window.location.href = `https://searx.gaia.mrcube.dev/search?q=${query}`;
 	}
 </script>
 
@@ -116,12 +116,12 @@
 		>
 			<h3>iliadbox</h3>
 		</a>
-		<a href="https://pve.home.mrcube.dev:8006" target="_blank" class="card">
+		<a href="https://nexus.mrcube.dev:8006" target="_blank" class="card">
 			<h3>Proxmox</h3>
 		</a>
-		<a href="https://truenas.home.mrcube.dev" target="_blank" class="card">
+		<!-- <a href="https://truenas.home.mrcube.dev" target="_blank" class="card">
 			<h3>TrueNAS</h3>
-		</a>
+		</a> -->
 	</div>
 
 	<div class="box">
