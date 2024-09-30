@@ -116,12 +116,12 @@
 		>
 			<h3>iliadbox</h3>
 		</a>
-		<a href="https://nexus.mrcube.dev:8006" target="_blank" class="card">
+		<a href={env.PUBLIC_proxmox} target="_blank" class="card">
 			<h3>Proxmox</h3>
 		</a>
-		<!-- <a href="https://truenas.home.mrcube.dev" target="_blank" class="card">
-			<h3>TrueNAS</h3>
-		</a> -->
+		<a href={env.PUBLIC_grafana} target="_blank" class="card">
+			<h3>Grafana</h3>
+		</a>
 	</div>
 
 	<div class="box">
