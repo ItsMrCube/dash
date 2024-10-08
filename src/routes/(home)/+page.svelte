@@ -119,6 +119,9 @@
 		<a href={env.PUBLIC_proxmox} target="_blank" class="card">
 			<h3>Proxmox</h3>
 		</a>
+		<a href={env.PUBLIC_truenas} target="_blank" class="card">
+			<h3>TrueNAS</h3>
+		</a>
 		<a href={env.PUBLIC_grafana} target="_blank" class="card">
 			<h3>Grafana</h3>
 		</a>
