@@ -5,7 +5,10 @@
 
 	const routers = data.traefik
 		.filter(
-			(v) => v.provider === 'docker' && v.entryPoints[0] === 'websecure' && v.service !== 'dash'
+			(v) =>
+				(v.provider === 'docker' || v.provider === 'file') &&
+				v.entryPoints[0] === 'websecure' &&
+				v.service !== 'dash'
 		)
 		.map((v) => ({
 			...v,
