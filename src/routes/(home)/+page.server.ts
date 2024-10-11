@@ -1,6 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 import { json } from '$lib';
+import { cpuTemperature } from 'systeminformation';
 
 export const load = async () => {
 	if (!env.latitude || !env.longitude || !env.pve) throw error(500, 'ENV Error');
@@ -30,7 +31,8 @@ export const load = async () => {
 					}
 				)
 			).data
-		}
+		},
+		cpuTemperature: await cpuTemperature()
 	};
 
 	return data;

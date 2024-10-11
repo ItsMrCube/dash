@@ -28,6 +28,14 @@
 			value: data.pve.status.cpu * 100
 		},
 		{
+			name: 'Temperature',
+			/* content: `${data.cpuTemperature.main} °C`, */
+			content: Intl.NumberFormat(undefined, { style: 'unit', unit: 'celsius' }).format(
+				data.cpuTemperature.main
+			),
+			value: data.cpuTemperature.main
+		},
+		{
 			name: 'RAM',
 			content: `${(data.pve.status.mem / 1024 ** 3).toFixed(2)} of ${(
 				data.pve.status.maxmem /
