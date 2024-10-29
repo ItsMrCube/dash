@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 
-	export let data;
+	let { data } = $props();
 
 	const routers = data.traefik
 		.filter(
@@ -50,7 +50,7 @@
 		}
 	];
 
-	let form: HTMLFormElement;
+	let form: HTMLFormElement = $state();
 
 	function search(query: string) {
 		form.reset();
@@ -86,7 +86,7 @@
 	<form
 		class="flex rounded-xl bg-slate-200 dark:bg-slate-900 overflow-clip h-12"
 		bind:this={form}
-		on:submit={(e) => search(e.target[0].value)}
+		onsubmit={(e) => search(e.target[0].value)}
 	>
 		<input
 			class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0"
