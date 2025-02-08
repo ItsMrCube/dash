@@ -84,23 +84,23 @@
 	</div>
 
 	<form
-		class="flex rounded-xl bg-slate-200 dark:bg-slate-900 overflow-clip h-12"
+		class="flex h-12 overflow-clip rounded-xl bg-slate-200 dark:bg-slate-900"
 		bind:this={form}
 		onsubmit={(e) => search(e.target[0].value)}
 	>
 		<input
-			class="w-full bg-transparent border-transparent focus:border-transparent focus:ring-0"
+			class="w-full border-transparent bg-transparent focus:border-transparent focus:ring-0"
 			placeholder="CubedSearch"
 			type="text"
 		/>
-		<button class="bg-blue-500 dark:bg-blue-600 text-slate-50 px-4" aria-label="Search">
+		<button class="bg-blue-500 px-4 text-slate-50 dark:bg-blue-600" aria-label="Search">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
 				viewBox="0 0 24 24"
 				stroke-width="1.5"
 				stroke="currentColor"
-				class="w-6 h-6"
+				class="h-6 w-6"
 			>
 				<path
 					stroke-linecap="round"
@@ -145,9 +145,9 @@
 					<span>{metric.name}</span>
 					<span class="whitespace-nowrap">{metric.content}</span>
 				</div>
-				<div class="bg-slate-300 rounded-full dark:bg-slate-800">
+				<div class="rounded-full bg-slate-300 dark:bg-slate-800">
 					<div
-						class="bg-blue-500 dark:bg-blue-600 h-2.5 rounded-full"
+						class="h-2.5 rounded-full bg-blue-500 dark:bg-blue-600"
 						style="width: {metric.value}%"
 					></div>
 				</div>
@@ -164,6 +164,6 @@
 	}
 
 	.card {
-		@apply bg-slate-200 dark:bg-slate-900 p-4 text-center rounded-xl basis-32 grow;
+		@apply grow basis-32 rounded-xl bg-slate-200 p-4 text-center dark:bg-slate-900;
 	}
 </style>
