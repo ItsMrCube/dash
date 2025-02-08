@@ -157,6 +157,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "$lib/styles/main.css";
+
 	.box {
 		@apply flex flex-wrap gap-4;
 	}
