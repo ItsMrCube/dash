@@ -9,7 +9,7 @@ const cache = new Map<
 /**
  * @param cacheFor - The duration in seconds for which the fetched data should be cached.
  */
-export async function json<T>(url: string, init?: FetchRequestInit, cacheFor = 10) {
+export async function json<T>(url: string, init?: RequestInit, cacheFor = 10) {
 	if (cache.has(url)) {
 		const cached = cache.get(url);
 
