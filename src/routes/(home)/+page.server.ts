@@ -7,7 +7,12 @@ export const load = async () => {
 	if (!env.latitude || !env.longitude || !env.pve) throw error(500, 'ENV Error');
 
 	const data = {
-		traefik: await json<Traefik>('https://traefik.gaia.mrcube.dev/api/http/routers'),
+		traefik: (await json<Traefik>('https://traefik.gaia.mrcube.dev/api/http/routers')).filter(
+			(v) =>
+				(v.provider === 'docker' || v.provider === 'file') &&
+				v.entryPoints[0] === 'websecure' &&
+				!env.ignore_list.split(',').includes(v.service)
+		),
 		meteo: await json<Meteo>(
 			`https://api.openweathermap.org/data/3.0/onecall?lon=${env.longitude}&lat=${env.latitude}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${env.appid}`,
 			undefined,

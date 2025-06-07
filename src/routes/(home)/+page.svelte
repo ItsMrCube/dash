@@ -4,12 +4,6 @@
 	let { data } = $props();
 
 	const routers = data.traefik
-		.filter(
-			(v) =>
-				(v.provider === 'docker' || v.provider === 'file') &&
-				v.entryPoints[0] === 'websecure' &&
-				v.service !== 'dash'
-		)
 		.map((v) => ({
 			...v,
 			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`,
@@ -120,22 +114,11 @@
 	</div>
 
 	<div class="box">
-		<a
-			href={env.PUBLIC_iliadbox ? env.PUBLIC_iliadbox : 'http://192.168.0.1'}
-			target="_blank"
-			class="card"
-		>
-			<h3>iliadbox</h3>
-		</a>
-		<a href={env.PUBLIC_proxmox} target="_blank" class="card">
-			<h3>Proxmox</h3>
-		</a>
-		<a href={env.PUBLIC_truenas} target="_blank" class="card">
-			<h3>TrueNAS</h3>
-		</a>
-		<a href={env.PUBLIC_grafana} target="_blank" class="card">
-			<h3>Grafana</h3>
-		</a>
+		{#each Object.entries(env).filter(([key]) => key.startsWith('PUBLIC_')) as [key, value]}
+			<a href={value} target="_blank" class="card">
+				<h3>{key.replace('PUBLIC_', '')}</h3>
+			</a>
+		{/each}
 	</div>
 
 	<div class="box">
