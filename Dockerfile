@@ -2,7 +2,7 @@ FROM oven/bun AS base
 
 WORKDIR /app
 
-COPY package.json bun.lockb /app/
+COPY package.json bun.lock /app/
 
 RUN bun i
 
