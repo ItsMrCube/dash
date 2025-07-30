@@ -23,7 +23,6 @@
 		},
 		{
 			name: 'Temperature',
-			/* content: `${data.cpuTemperature.main} °C`, */
 			content: Intl.NumberFormat(undefined, { style: 'unit', unit: 'celsius' }).format(
 				data.cpuTemperature.main
 			),
@@ -54,13 +53,6 @@
 
 <div class="grid gap-8">
 	<div class="card flex items-center justify-center">
-		<!-- fixme or something -->
-		<!-- <img
-			src="https://openweathermap.org/img/wn/{data.meteo.current.weather[0].icon}.png"
-			alt={data.meteo.current.weather[0].description}
-			width="50"
-			height="50"
-		/> -->
 		<div>
 			<p>
 				The current temperature is {data.meteo.current.temp.toFixed(0)}°C, it feels like {data.meteo.current.feels_like.toFixed(
