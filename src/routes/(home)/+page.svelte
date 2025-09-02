@@ -6,10 +6,12 @@
 	const routers = data.traefik
 		.map((v) => ({
 			...v,
-			link: `https://${v.rule.match(/\(`(.+)`\)/)[1]}`,
-			prettyName: v.rule.match(/`(\w+).+`/)[1]
+			link: `https://${v.rule.match(/`([^`]+)`/)[1]}`,
+			prettyName: v.rule.match(/(\w+)\./)[1]
 		}))
 		.sort((a, b) => a.prettyName.localeCompare(b.prettyName));
+
+	console.log(data.traefik);
 
 	const metrics: {
 		name: string;
