@@ -11,8 +11,6 @@
 		}))
 		.sort((a, b) => a.prettyName.localeCompare(b.prettyName));
 
-	console.log(data.traefik);
-
 	const metrics: {
 		name: string;
 		content: string;
