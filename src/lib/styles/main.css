@@ -1,6 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@plugin '@tailwindcss/forms';
+@plugin "@tailwindcss/forms";
 
 @layer base {
 	@font-face {
@@ -8,14 +8,16 @@
 		font-style: normal;
 		font-weight: 100 900;
 		font-display: swap;
-		src: url('https://rsms.me/inter/font-files/InterVariable.woff2') format('woff2');
+		src: url("https://rsms.me/inter/font-files/InterVariable.woff2")
+			format("woff2");
 	}
 	@font-face {
 		font-family: InterVariable;
 		font-style: italic;
 		font-weight: 100 900;
 		font-display: swap;
-		src: url('https://rsms.me/inter/font-files/InterVariable-Italic.woff2') format('woff2');
+		src: url("https://rsms.me/inter/font-files/InterVariable-Italic.woff2")
+			format("woff2");
 	}
 
 	@supports (font-variation-settings: normal) {

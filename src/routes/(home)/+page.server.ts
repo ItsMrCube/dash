@@ -1,43 +1,46 @@
-import { env } from '$env/dynamic/private';
-import { error } from '@sveltejs/kit';
-import { json } from '$lib';
-import { cpuTemperature } from 'systeminformation';
+import { error } from "@sveltejs/kit";
+import { cpuTemperature } from "systeminformation";
+import { env } from "$env/dynamic/private";
+import { json } from "$lib";
 
 export const load = async () => {
-	if (!env.latitude || !env.longitude || !env.pve_token) throw error(500, 'ENV Error');
+	if (!env.latitude || !env.longitude || !env.pve_token)
+		throw error(500, "ENV Error");
 
 	const data = {
-		traefik: (await json<Traefik>('https://traefik.gaia.mrcube.dev/api/http/routers')).filter(
+		traefik: (
+			await json<Traefik>("https://traefik.gaia.mrcube.dev/api/http/routers")
+		).filter(
 			(v) =>
-				(v.provider === 'docker' || v.provider === 'file') &&
-				v.entryPoints[0] === 'websecure' &&
-				!env.ignore_list.split(',').includes(v.service)
+				(v.provider === "docker" || v.provider === "file") &&
+				v.entryPoints[0] === "websecure" &&
+				!env.ignore_list.split(",").includes(v.service),
 		),
 		meteo: await json<Meteo>(
 			`https://api.openweathermap.org/data/3.0/onecall?lon=${env.longitude}&lat=${env.latitude}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${env.openweather_appid}`,
 			undefined,
-			60
+			60,
 		),
 		pve: {
 			status: (
-				await json<PVE>('https://nexus.mrcube.dev:8006/api2/json/nodes', {
+				await json<PVE>("https://nexus.mrcube.dev:8006/api2/json/nodes", {
 					headers: {
-						Authorization: env.pve_token
-					}
+						Authorization: env.pve_token,
+					},
 				})
 			).data[0],
 			zfs: (
 				await json<ZFS>(
-					'https://nexus.mrcube.dev:8006/api2/json/nodes/nexus/storage/local-zfs/status',
+					"https://nexus.mrcube.dev:8006/api2/json/nodes/nexus/storage/local-zfs/status",
 					{
 						headers: {
-							Authorization: env.pve_token
-						}
-					}
+							Authorization: env.pve_token,
+						},
+					},
 				)
-			).data
+			).data,
 		},
-		cpuTemperature: await cpuTemperature()
+		cpuTemperature: await cpuTemperature(),
 	};
 
 	return data;
@@ -79,7 +82,7 @@ interface Meteo {
 				main: string;
 				description: string;
 				icon: string;
-			}
+			},
 		];
 	};
 }
@@ -100,7 +103,7 @@ interface PVE {
 			mem: number;
 			node: string;
 			type: string;
-		}
+		},
 	];
 }
 

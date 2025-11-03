@@ -1,6 +1,6 @@
-import adapter from 'svelte-adapter-bun';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import type { Config } from '@sveltejs/kit';
+import type { Config } from "@sveltejs/kit";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import adapter from "svelte-adapter-bun";
 
 const config: Config = {
 	preprocess: vitePreprocess(),
@@ -8,8 +8,8 @@ const config: Config = {
 	compilerOptions: { runes: true },
 
 	kit: {
-		adapter: adapter()
-	}
+		adapter: adapter(),
+	},
 };
 
 export default config;

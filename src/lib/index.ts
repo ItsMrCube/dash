@@ -25,7 +25,7 @@ export async function json<T>(url: string, init?: RequestInit, cacheFor = 10) {
 	if (cacheFor) {
 		cache.set(url, {
 			data: await data,
-			expires: new Date(Date.now() + cacheFor * 1000)
+			expires: new Date(Date.now() + cacheFor * 1000),
 		});
 	}
 
@@ -34,6 +34,9 @@ export async function json<T>(url: string, init?: RequestInit, cacheFor = 10) {
 
 export function titleCase(str: string) {
 	return str //
-		.replace(/_/g, ' ')
-		.replace(/\b\w+\b/g, (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase());
+		.replace(/_/g, " ")
+		.replace(
+			/\b\w+\b/g,
+			(str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(),
+		);
 }
