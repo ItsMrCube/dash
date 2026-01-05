@@ -11,7 +11,7 @@
         "@types/bun": "1.3.5",
         "svelte": "5.46.1",
         "svelte-adapter-bun": "0.5.2",
-        "systeminformation": "5.28.3",
+        "systeminformation": "5.29.0",
         "tailwindcss": "4.1.18",
         "typescript": "5.9.3",
         "vite": "7.3.0",
@@ -275,7 +275,7 @@
 
     "svelte-adapter-bun": ["svelte-adapter-bun@0.5.2", "", { "dependencies": { "tiny-glob": "^0.2.9" } }, "sha512-xEtFgaal6UgrCwwkSIcapO9kopoFNUYCYqyKCikdqxX9bz2TDYnrWQZ7qBnkunMxi1HOIERUCvTcebYGiarZLA=="],
 
-    "systeminformation": ["systeminformation@5.28.3", "", { "os": "!aix", "bin": { "systeminformation": "lib/cli.js" } }, "sha512-crbaZrBH3TpTbqc0PKFqnUFHdAJOxV9UhF3KCGSrf+YP+SkoMHmxU2Nr9yIG2xgCr4645Z9Ec4GHQQQ7kGX/HA=="],
+    "systeminformation": ["systeminformation@5.29.0", "", { "os": "!aix", "bin": { "systeminformation": "lib/cli.js" } }, "sha512-d4H5A/8uuK/w1Ee6Rpp0HuelXv5TTcyyqikPlPUiIREDwDWmXxRMLQAE90jL09fejuIxwHcn1fxlpNiAhNpy6A=="],
 
     "tailwindcss": ["tailwindcss@4.1.18", "", {}, "sha512-4+Z+0yiYyEtUVCScyfHCxOYP06L5Ne+JiHhY2IjR2KWMIWhJOYZKLSGZaP5HkZ8+bY0cxfzwDE5uOmzFXyIwxw=="],
 
