@@ -3,19 +3,21 @@
 
   let { data } = $props();
 
-  const routers = data.traefik
-    .map((v) => ({
-      ...v,
-      link: `https://${v.rule.match(/`([^`]+)`/)[1]}`,
-      prettyName: v.rule.match(/(\w+)\./)[1],
-    }))
-    .sort((a, b) => a.prettyName.localeCompare(b.prettyName));
+  const routers = $derived(
+    data.traefik
+      .map((v) => ({
+        ...v,
+        link: `https://${v.rule.match(/`([^`]+)`/)[1]}`,
+        prettyName: v.rule.match(/(\w+)\./)[1],
+      }))
+      .sort((a, b) => a.prettyName.localeCompare(b.prettyName)),
+  );
 
   const metrics: {
     name: string;
     content: string;
     value: number;
-  }[] = [
+  }[] = $derived([
     {
       name: "CPU",
       content: `${(data.pve.status.cpu * 100).toFixed(2)}%`,
@@ -42,7 +44,7 @@
       content: `${(data.pve.zfs.used / 1024 ** 3).toFixed(2)} of ${(data.pve.zfs.total / 1024 ** 3).toFixed(0)} GB`,
       value: (data.pve.zfs.used / data.pve.zfs.total) * 100,
     },
-  ];
+  ]);
 
   let form: HTMLFormElement = $state();
 
