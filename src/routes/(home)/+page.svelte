@@ -20,7 +20,7 @@
   }[] = $derived([
     {
       name: "CPU",
-      content: `${(data.pve.status.cpu * 100).toFixed(2)}%`,
+      content: `${(data.pve.status.cpu * 100).toFixed(1)}%`,
       value: data.pve.status.cpu * 100,
     },
     {
@@ -33,15 +33,15 @@
     },
     {
       name: "RAM",
-      content: `${(data.pve.status.mem / 1024 ** 3).toFixed(2)} of ${(
+      content: `${(data.pve.status.mem / 1024 ** 3).toFixed(1)} of ${(
         data.pve.status.maxmem /
         1024 ** 3
-      ).toFixed(0)} GB`,
+      ).toFixed()} GiB`,
       value: (data.pve.status.mem / data.pve.status.maxmem) * 100,
     },
     {
       name: "ZFS",
-      content: `${(data.pve.zfs.used / 1024 ** 3).toFixed(2)} of ${(data.pve.zfs.total / 1024 ** 3).toFixed(0)} GB`,
+      content: `${(data.pve.zfs.used / 1024 ** 3).toFixed(2)} of ${(data.pve.zfs.total / 1024 ** 3).toFixed(0)} GiB`,
       value: (data.pve.zfs.used / data.pve.zfs.total) * 100,
     },
   ]);
