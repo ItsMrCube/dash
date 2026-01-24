@@ -62,7 +62,7 @@
       </p>
       <p>
         Humidity is at {data.meteo.current.humidity}%, UV index is {data.meteo.current.uvi.toFixed(
-          0
+          0,
         )}, and cloudiness is {data.meteo.current.clouds}%. The wind is blowing
         at {data.meteo.current.wind_speed.toFixed(0)} m/s.
       </p>
@@ -109,7 +109,7 @@
   </div>
 
   <div class="box">
-    {#each Object.entries(env).filter( ([key]) => key.startsWith("PUBLIC_") ) as [key, value]}
+    {#each Object.entries(env).filter( ([key]) => key.startsWith("PUBLIC_"), ) as [key, value]}
       <a href={value} target="_blank" class="card">
         <h3>{key.replace("PUBLIC_", "")}</h3>
       </a>
