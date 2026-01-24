@@ -72,7 +72,7 @@
   </div>
 
   <form
-    class="flex h-12 overflow-clip rounded-xl bg-slate-200 dark:bg-slate-900"
+    class="flex h-12 overflow-clip rounded-xl bg-ctp-mantle"
     bind:this={form}
     onsubmit={(e) => search(e.target[0].value)}
   >
@@ -81,15 +81,12 @@
       placeholder="CubedSearch"
       type="text"
     />
-    <button
-      class="bg-blue-500 px-4 text-slate-50 dark:bg-blue-600"
-      aria-label="Search"
-    >
+    <button class="bg-ctp-blue text-ctp-base px-4" aria-label="Search">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        stroke-width="1.5"
+        stroke-width="2"
         stroke="currentColor"
         class="h-6 w-6"
       >
@@ -125,9 +122,9 @@
           <span>{metric.name}</span>
           <span class="whitespace-nowrap">{metric.content}</span>
         </div>
-        <div class="rounded-full bg-slate-300 dark:bg-slate-800">
+        <div class="rounded-full bg-ctp-crust">
           <div
-            class="h-2.5 rounded-full bg-blue-500 dark:bg-blue-600"
+            class="h-2.5 rounded-full bg-ctp-blue"
             style="width: {metric.value}%"
           ></div>
         </div>
@@ -144,6 +141,6 @@
   }
 
   .card {
-    @apply grow basis-32 rounded-xl bg-slate-200 p-4 text-center dark:bg-slate-900;
+    @apply grow basis-32 rounded-xl bg-ctp-mantle p-4 text-center;
   }
 </style>

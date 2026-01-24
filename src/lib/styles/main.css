@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@import "@catppuccin/tailwindcss/mocha.css";
+
 @plugin "@tailwindcss/forms";
 
 @layer base {
@@ -27,7 +29,7 @@
 	}
 
 	html {
-		@apply bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-slate-50;
+		@apply text-ctp-text bg-ctp-base;
 	}
 
 	h1 {
