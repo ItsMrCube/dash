@@ -8,15 +8,15 @@
 		"preview": "bun -b run vite build && bun run vite preview"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.6.3",
+		"@biomejs/biome": "2.6.4",
 		"@catppuccin/tailwindcss": "1.0.0",
 		"@sveltejs/kit": "2.70.3",
 		"@tailwindcss/forms": "0.5.11",
 		"@tailwindcss/vite": "4.3.3",
 		"@types/bun": "1.4.4",
-		"svelte": "5.57.2",
+		"svelte": "5.57.3",
 		"svelte-adapter-bun": "0.5.2",
-		"systeminformation": "5.33.16",
+		"systeminformation": "5.33.19",
 		"tailwindcss": "4.3.3",
 		"typescript": "5.9.3",
 		"vite": "7.3.7"
